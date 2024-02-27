@@ -1,0 +1,88 @@
+{
+  "name": "vscode-quick-import",
+  "displayName": "Export for AI chat",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Adds a new import to the top of the current file",
+  "keywords": [
+    "code-extension",
+    "extension",
+    "vsce",
+    "vscode",
+    "vscode-extension",
+    "vsix",
+    "import"
+  ],
+  "author": "Jaid <jaid.jsx@gmail.com> (https://github.com/Jaid)",
+  "homepage": "https://github.com/Jaid/vscode-quick-import",
+  "funding": "https://github.com/sponsors/jaid",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaid/vscode-quick-import"
+  },
+  "main": "./out/webpack/index.js",
+  "activationEvents": [
+    "onCommand"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "quick-import.addImport",
+        "title": "Add quick import"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "quick-import.addImport",
+          "group": "z_commands",
+          "when": "editorTextFocus && !editorReadonly && ( editorLangId == typescript || editorLangId == typescriptreact || editorLangId == javascript || editorLangId == javascriptreact )"
+        }
+      ]
+    },
+    "configuration": {}
+  },
+  "categories": [
+    "Snippets",
+    "Other"
+  ],
+  "scripts": {
+    "build": "tsc --inlineSourceMap && webpack",
+    "package": "npm run build && cp license.txt out/webpack && cd out/webpack && vsce package"
+  },
+  "dependencies": {
+    "zeug": "jaid/zeug#tsc"
+  },
+  "devDependencies": {
+    "@actions/core": "^1.10.1",
+    "@actions/github": "^6.0.0",
+    "@types/node": "^20.11.20",
+    "browserslist-config-jaid-universal": "^3.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-jaid": "^8.22.0",
+    "fs-extra": "^11.2.0",
+    "globby": "^14.0.1",
+    "handlebars": "^4.7.8",
+    "key-counter": "^1.0.4",
+    "lodash-es": "^4.17.21",
+    "prevent-start": "^1.0.5",
+    "read-file-json": "^1.1.0",
+    "read-file-string": "^1.1.2",
+    "read-file-yaml": "^2.0.0",
+    "showdown": "^2.1.0",
+    "super-regex": "^0.3.0",
+    "ts-loader": "^9.5.1",
+    "ts-xor": "^1.3.0",
+    "tsconfig-jaid": "^6.1.1",
+    "tsconfig-jaid-node": "^6.1.1",
+    "tsx": "^4.7.1",
+    "type-fest": "^4.10.3",
+    "typescript": "^5.3.3",
+    "webpack": "^5.90.3",
+    "wireit": "^0.14.4",
+    "yaml": "^2.4.0"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  }
+}
