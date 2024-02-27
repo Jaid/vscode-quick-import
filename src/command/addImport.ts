@@ -53,6 +53,7 @@ export const addImport = async () => {
     }
   }
   let name = findCurrentToken(document, editor.selection)
+  let inputPackage: string | undefined
   if (!name) {
     name = await vscode.window.showInputBox({
       prompt: `Enter the name of the variable to import:`,
@@ -60,11 +61,17 @@ export const addImport = async () => {
     if (!name) {
       return
     }
+    const defaultPackageName = lodash.kebabCase(name)
+    inputPackage = await vscode.window.showInputBox({
+      prompt: `Enter the name of the package to import from:`,
+      value: defaultPackageName,
+      valueSelection: undefined,
+    })
   }
   const importPresetBase: ImportPreset = map[name] ?? {}
   const importPreset = {
     import: name,
-    package: lodash.kebabCase(name),
+    package: inputPackage ?? lodash.kebabCase(name),
     isNamespace: false,
     isNamed: false,
     isType: false,
