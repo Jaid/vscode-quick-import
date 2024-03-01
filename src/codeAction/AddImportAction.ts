@@ -46,6 +46,7 @@ export class AddImportAction implements vscode.CodeActionProvider {
         document,
         range: relevantDiagnostic.range,
         name,
+        interactive: false,
       }
       fix.diagnostics = [relevantDiagnostic]
       fix.command = {
