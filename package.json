@@ -149,7 +149,7 @@
     "@types/node": "^20.11.24",
     "browserslist-config-jaid-universal": "^3.0.0",
     "eslint": "^8.57.0",
-    "eslint-config-jaid": "^8.22.0",
+    "eslint-config-jaid": "^8.23.0",
     "fs-extra": "^11.2.0",
     "globby": "^14.0.1",
     "handlebars": "^4.7.8",
