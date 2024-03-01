@@ -1,34 +1,14 @@
-type DefaultImport = {
-  isNamed?: false
-  isNamespace?: false
-  isType?: false
-}
-type NamedImport = {
-  isNamed: true
-  isNamespace?: false
-  isType?: false
-}
-type NamespaceImport = {
-  isNamed?: false
-  isNamespace: true
-  isType?: false
-}
-type TypeImport = {
-  isNamed?: true
-  isNamespace?: false
-  isType: true
-}
-
 export type ImportPreset = {
   import?: string
   package?: string
-} & (DefaultImport | NamedImport | NamespaceImport | TypeImport)
+  type?: 'default' | 'named' | 'namespace' | 'type'
+}
 type ImportMap = Record<string, ImportPreset>
 
 export const map: ImportMap = {
   lodash: {
     package: `lodash-es`,
-    isNamespace: true,
+    type: `namespace`,
   },
   fs: {
     package: `fs-extra`,
@@ -44,40 +24,38 @@ export const map: ImportMap = {
   },
   $: {
     package: `execa`,
-    isNamed: true,
+    type: `named`,
   },
   shellQuote: {
-    isNamespace: true,
+    type: `namespace`,
   },
   simpleGit: {
-    isNamed: true,
   },
   fileURLToPath: {
     package: `node:url`,
-    isNamed: true,
+    type: `named`,
   },
   globby: {
-    isNamed: true,
+    type: `named`,
   },
   mapObject: {
     package: `map-obj`,
   },
   mapObjectSkip: {
     package: `map-obj`,
-    isNamed: true,
+    type: `named`,
   },
   XOR: {
     package: `ts-xor`,
-    isType: true,
   },
   PackageJson: {
     package: `type-fest`,
-    isType: true,
+    type: `type`,
   },
   vscode: {
-    isNamespace: true,
+    type: `namespace`,
   },
   pathEqual: {
-    isNamed: true,
+    type: `named`,
   },
 }

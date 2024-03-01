@@ -3,7 +3,8 @@
   "configurations": [
     {
       "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}"
+        "--extensionDevelopmentPath=${workspaceFolder}",
+        "${workspaceFolder}/temp/sampleProject"
       ],
       "name": "Launch Extension",
       "outFiles": [

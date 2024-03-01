@@ -51,6 +51,11 @@ const extensionConfig = {
   devtool: `inline-source-map`,
   plugins: [
     new EmitPackageJsonPlugin(pkg)
-  ]
+  ],
+  resolve: {
+    alias: {
+      "~/lib":  path.resolve(dirName, `out/ts/lib`)
+    }
+  }
 }
 export default extensionConfig

@@ -1,6 +1,6 @@
 {
   "name": "vscode-quick-import",
-  "displayName": "Export for AI chat",
+  "displayName": "Quick Import",
   "version": "0.0.1",
   "type": "module",
   "description": "Adds a new import to the top of the current file",
@@ -22,7 +22,11 @@
   },
   "main": "./out/webpack/index.js",
   "activationEvents": [
-    "onCommand"
+    "onCommand",
+    "onLanguage:typescript",
+    "onLanguage:typescriptreact",
+    "onLanguage:javascript",
+    "onLanguage:javascriptreact"
   ],
   "contributes": {
     "commands": [
@@ -40,7 +44,92 @@
         }
       ]
     },
-    "configuration": {}
+    "configuration": {
+      "properties": {
+        "quick-import.template": {
+          "type": "string",
+          "default": "import {{#if isType}}type {{inBraces import}}{{else if isNamed}}{{inBraces import}}{{else if isNamespace}}* as {{import}}{{else}}{{import}}{{/if}} from {{inQuotes package}}{{newLine}}",
+          "markdownDescription": "Handlebars template for import statement.  \nAvailable variables: `import`, `package`, `isType`, `isNamed`, `isNamespace`, `isDefault`  \nAvailable helpers: `inBraces`, `inQuotes`",
+          "description": "Handlebars template for import statement.\nAvailable variables: import, package, isType, isNamed, isNamespace, isDefault\nAvailable helpers: inBraces, inQuotes",
+          "editPresentation": "multilineText"
+        },
+        "quick-import.braceSpace": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "default": true,
+          "description": "If true, adds a space at both sides inside of braces. If string, it’s the spacer to use."
+        },
+        "quick-import.quoteSymbol": {
+          "type": "string",
+          "default": "'",
+          "description": "Symbol to use for quotes",
+          "enum": [
+            "'",
+            "\""
+          ]
+        },
+        "quick-import.map": {
+          "description": "Custom import shortcut customizations",
+          "type": "object",
+          "default": {
+            "lodash": {
+              "type": "namespace",
+              "package": "lodash-es"
+            },
+            "vscode": {
+              "type": "namespace"
+            }
+          },
+          "properties": {},
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "import": {
+                "type": "string",
+                "description": "Imported variable name"
+              },
+              "package": {
+                "type": "string",
+                "description": "Package name to import from"
+              },
+              "type": {
+                "type": "string",
+                "description": "Type of import (default, named, namespace, type)",
+                "default": "default",
+                "enum": [
+                  "default",
+                  "named",
+                  "namespace",
+                  "type"
+                ]
+              }
+            }
+          }
+        },
+        "quick-import.insertionPosition": {
+          "type": "string",
+          "default": "top",
+          "description": "Where to insert the import statement",
+          "enum": [
+            "top",
+            "firstCodeLine",
+            "optimal"
+          ],
+          "enumItemLabels": [
+            "Top",
+            "First code line",
+            "Optimal"
+          ],
+          "markdownEnumDescriptions": [
+            "Top of the file",
+            "Above the first line of code",
+            "Above an import statement (or the first line of code if none are present)"
+          ]
+        }
+      }
+    }
   },
   "categories": [
     "Snippets",
@@ -51,6 +140,7 @@
     "package": "npm run build && cp license.txt out/webpack && cd out/webpack && vsce package"
   },
   "dependencies": {
+    "memoize-cache-decorator": "^2.0.0",
     "zeug": "jaid/zeug#tsc"
   },
   "devDependencies": {
