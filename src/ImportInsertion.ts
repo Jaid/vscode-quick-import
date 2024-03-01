@@ -1,5 +1,7 @@
 import * as vscode from 'vscode'
 
+import {getLineSeparator} from '~/lib/documentUtil.js'
+
 type Options = {
   document: vscode.TextDocument
   importStatement: string
@@ -22,7 +24,8 @@ export class ImportInsertion {
   }
   toWorkspaceEdit() {
     const edit = new vscode.WorkspaceEdit
-    edit.insert(this.document.uri, this.insertionPosition, this.importStatement)
+    const line = this.importStatement + getLineSeparator(this.document)
+    edit.insert(this.document.uri, this.insertionPosition, line)
     return edit
   }
 }

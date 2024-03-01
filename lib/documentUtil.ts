@@ -44,3 +44,8 @@ export const findCurrentToken = (document: vscode.TextDocument, range?: vscode.R
   // }
   // return document.getText(wordRange)
 }
+
+export const getLineSeparator = (document: vscode.TextDocument) => {
+  const eol = document.eol === vscode.EndOfLine.LF ? `\n` : `\r\n`
+  return eol
+}

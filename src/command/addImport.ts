@@ -1,16 +1,23 @@
+import type {ImportInsertion} from '~/src/ImportInsertion.js'
+
 import * as vscode from 'vscode'
 
 import {ImportBuilder} from '../ImportBuilder.js'
-import {outputChannel} from '../outputChannel.js'
 
 export const id = `quick-import.addImport`
 
-type Options = ImportBuilder['options']
+type Options = ImportBuilder['options'] & {
+  interactive?: boolean
+}
 
 export const addImport = async (options: Options = {}) => {
-  outputChannel.appendLine(`addImport`)
   const importBuilder = new ImportBuilder(options)
-  const insertion = await importBuilder.buildInteractive()
+  let insertion: ImportInsertion | undefined
+  if (options.interactive) {
+    insertion = await importBuilder.buildInteractive()
+  } else {
+    insertion = importBuilder.build()
+  }
   const edit = insertion?.toWorkspaceEdit()
   if (edit === undefined) {
     return

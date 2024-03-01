@@ -36,10 +36,10 @@ const dirName = path.dirname(fileURLToPath(import.meta.url))
 /**
  * @type {import('webpack').Configuration}
  */
-const extensionConfig = {
+const extensionTsConfig = {
   target: `node`,
   mode: `none`,
-  entry: `./out/ts/src/extension.js`,
+  entry: `./src/index.ts`,
   output: {
     path: path.resolve(dirName, `out/webpack`),
     filename: `index.js`,
@@ -54,8 +54,39 @@ const extensionConfig = {
   ],
   resolve: {
     alias: {
-      "~":  path.resolve(dirName, `out/ts`),
+      "~": dirName,
+    },
+    extensions: [`.ts`, `.js`],
+    extensionAlias: {
+      ".js": [
+        `.ts`,
+        `.js`
+      ],
     }
-  }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js)$/,
+        use: `source-map-loader`,
+        enforce: `pre`
+      },
+      {
+        test: /\.ts$/,
+        use:
+          {
+          loader: `ts-loader`,
+          options: {
+            onlyCompileBundledFiles: true,
+            compilerOptions: {
+              inlineSourceMap: true,
+              inlineSources: true
+            },
+          }
+        },
+        exclude: /node_modules/,
+      },
+    ],
+  },
 }
-export default extensionConfig
+export default extensionTsConfig

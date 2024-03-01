@@ -48,7 +48,7 @@
       "properties": {
         "quick-import.template": {
           "type": "string",
-          "default": "import {{#if isType}}type {{inBraces import}}{{else if isNamed}}{{inBraces import}}{{else if isNamespace}}* as {{import}}{{else}}{{import}}{{/if}} from {{inQuotes package}}{{newLine}}",
+          "default": "import {{#if isType}}type {{inBraces import}}{{else if isNamed}}{{inBraces import}}{{else if isNamespace}}* as {{import}}{{else}}{{import}}{{/if}} from {{inQuotes package}}",
           "markdownDescription": "Handlebars template for import statement.  \nAvailable variables: `import`, `package`, `isType`, `isNamed`, `isNamespace`, `isDefault`  \nAvailable helpers: `inBraces`, `inQuotes`",
           "description": "Handlebars template for import statement.\nAvailable variables: import, package, isType, isNamed, isNamespace, isDefault\nAvailable helpers: inBraces, inQuotes",
           "editPresentation": "multilineText"
@@ -110,7 +110,7 @@
         },
         "quick-import.insertionPosition": {
           "type": "string",
-          "default": "top",
+          "default": "optimal",
           "description": "Where to insert the import statement",
           "enum": [
             "top",
@@ -136,7 +136,7 @@
     "Other"
   ],
   "scripts": {
-    "build": "tsc --inlineSourceMap && webpack",
+    "build": "webpack",
     "package": "npm run build && cp license.txt out/webpack && cd out/webpack && vsce package"
   },
   "dependencies": {
@@ -160,6 +160,7 @@
     "read-file-string": "^1.1.2",
     "read-file-yaml": "^2.0.0",
     "showdown": "^2.1.0",
+    "source-map-loader": "^5.0.0",
     "super-regex": "^0.3.0",
     "ts-loader": "^9.5.1",
     "ts-xor": "^1.3.0",

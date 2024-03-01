@@ -23,42 +23,40 @@ export class AddImportAction implements vscode.CodeActionProvider {
     providedCodeActionKinds: [vscode.CodeActionKind.QuickFix],
   }
   @logExecutionTime({
-    log: ms => outputChannel.appendLine(`addImport took ${ms}ms`),
+    log: message => outputChannel.appendLine(message),
   })
-  public async provideCodeActions(document: vscode.TextDocument, range: vscode.Range, context: vscode.CodeActionContext, token: vscode.CancellationToken): Promise<Array<vscode.CodeAction> | undefined> {
-    const relevantDiagnostic = context.diagnostics.find(diagnostic => {
-      for (const relevantDiagnosticsPattern of relevantDiagnosticsPatterns) {
-        if (lodash.isMatch(diagnostic, relevantDiagnosticsPattern)) {
-          outputChannel.appendLine(`found relevant diagnostic: ${JSON.stringify(diagnostic)}`)
-          return true
+  public provideCodeActions(document: vscode.TextDocument, range: vscode.Range, context: vscode.CodeActionContext, token: vscode.CancellationToken): Array<vscode.CodeAction> | undefined {
+    try {
+      const relevantDiagnostic = context.diagnostics.find(diagnostic => {
+        for (const relevantDiagnosticsPattern of relevantDiagnosticsPatterns) {
+          if (lodash.isMatch(diagnostic, relevantDiagnosticsPattern)) {
+            return true
+          }
         }
+        return false
+      })
+      if (!relevantDiagnostic) {
+        return
       }
-      return false
-    })
-    if (!relevantDiagnostic) {
-      return
+      const name = document.getText(relevantDiagnostic.range)
+      const title = ImportBuilder.renderImportStatement(name)
+      const fix = new vscode.CodeAction(title, vscode.CodeActionKind.QuickFix)
+      const options: ImportBuilder['options'] = {
+        document,
+        range: relevantDiagnostic.range,
+        name,
+      }
+      fix.diagnostics = [relevantDiagnostic]
+      fix.command = {
+        title,
+        command: `quick-import.addImport`,
+        arguments: [options],
+      }
+      outputChannel.appendLine(`Created fix “${title}” for diagnostic “${relevantDiagnostic.message}”`)
+      return [fix]
+    } catch (error) {
+      outputChannel.appendLine(`provideCodeActions error: ${error}`)
+      throw error
     }
-    const duplicateFix = await this.createFix(document, relevantDiagnostic)
-    if (!duplicateFix) {
-      return
-    }
-    return [duplicateFix]
-  }
-  private async createFix(document: vscode.TextDocument, diagnostic: vscode.Diagnostic): Promise<vscode.CodeAction | undefined> {
-    const text = document.getText(diagnostic.range)
-    const importBuilder = new ImportBuilder({
-      document,
-      range: diagnostic.range,
-      name: text,
-    })
-    const importInsertion = importBuilder.build()
-    if (importInsertion === undefined) {
-      return
-    }
-    const fix = new vscode.CodeAction(importInsertion.importStatement, vscode.CodeActionKind.QuickFix)
-    fix.diagnostics = [diagnostic]
-    fix.edit = new vscode.WorkspaceEdit
-    fix.edit.insert(importInsertion.document.uri, importInsertion.insertionPosition, importInsertion.importStatement)
-    return fix
   }
 }
