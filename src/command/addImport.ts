@@ -1,17 +1,25 @@
 import type {ImportInsertion} from '~/src/ImportInsertion.js'
+import type {InputOptions} from 'zeug/types'
 
 import * as vscode from 'vscode'
 
 import {ImportBuilder} from '../ImportBuilder.js'
 
-export const id = `quick-import.addImport`
+type Options = InputOptions<{
+  defaultsType: typeof defaultOptions
+  optionalOptions: ImportBuilder['options']
+}>
 
-type Options = ImportBuilder['options'] & {
-  interactive?: boolean
+const defaultOptions = {
+  interactive: true,
 }
 
-export const addImport = async (options: Options = {}) => {
-  const importBuilder = new ImportBuilder(options)
+export const addImport = async (options: Options['parameter'] = defaultOptions) => {
+  const mergedOptions: Options['merged'] = {
+    ...defaultOptions,
+    ...options,
+  }
+  const importBuilder = new ImportBuilder(mergedOptions)
   let insertion: ImportInsertion | undefined
   if (options.interactive) {
     insertion = await importBuilder.buildInteractive()
@@ -24,3 +32,5 @@ export const addImport = async (options: Options = {}) => {
   }
   await vscode.workspace.applyEdit(edit)
 }
+
+addImport.id = `quick-import.addImport`

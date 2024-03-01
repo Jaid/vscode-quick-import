@@ -2,6 +2,7 @@ import * as lodash from 'lodash-es'
 import * as vscode from 'vscode'
 import {logExecutionTime} from 'zeug'
 
+import {addImport} from '~/src/command/addImport.js'
 import {ImportBuilder} from '~/src/ImportBuilder.js'
 import {outputChannel} from '~/src/outputChannel.js'
 
@@ -41,7 +42,7 @@ export class AddImportAction implements vscode.CodeActionProvider {
       const name = document.getText(relevantDiagnostic.range)
       const title = ImportBuilder.renderImportStatement(name)
       const fix = new vscode.CodeAction(title, vscode.CodeActionKind.QuickFix)
-      const options: ImportBuilder['options'] = {
+      const options: Parameters<typeof addImport>[0] = {
         document,
         range: relevantDiagnostic.range,
         name,
@@ -49,10 +50,10 @@ export class AddImportAction implements vscode.CodeActionProvider {
       fix.diagnostics = [relevantDiagnostic]
       fix.command = {
         title,
-        command: `quick-import.addImport`,
+        command: addImport.id,
         arguments: [options],
       }
-      outputChannel.appendLine(`Created fix “${title}” for diagnostic “${relevantDiagnostic.message}”`)
+      outputChannel.appendLine(`Created fix “${title}” for problem “${relevantDiagnostic.message}”`)
       return [fix]
     } catch (error) {
       outputChannel.appendLine(`provideCodeActions error: ${error}`)
