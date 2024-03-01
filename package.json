@@ -140,7 +140,6 @@
     "package": "npm run build && cp license.txt out/webpack && cd out/webpack && vsce package"
   },
   "dependencies": {
-    "disposablestack": "^1.1.3",
     "memoize-cache-decorator": "^2.0.0",
     "zeug": "jaid/zeug#tsc"
   },

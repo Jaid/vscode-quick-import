@@ -54,7 +54,7 @@ const extensionConfig = {
   ],
   resolve: {
     alias: {
-      "~/lib":  path.resolve(dirName, `out/ts/lib`)
+      "~":  path.resolve(dirName, `out/ts`),
     }
   }
 }
