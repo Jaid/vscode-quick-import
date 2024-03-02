@@ -36,3 +36,5 @@ emp:
 Immer:
   package: immer
   type: named
+is:
+  package: '@sindresorhus/is'

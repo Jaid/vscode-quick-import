@@ -4,12 +4,24 @@ import readFileYaml from 'read-file-yaml'
 
 const presetsFolder = `presets`
 const files = await globby(`*.yml`, {cwd: presetsFolder})
-const output = {}
+const javascriptOutput = {}
+const typescriptOutput = {}
 for (const file of files) {
   const presets = await readFileYaml.default(`${presetsFolder}/${file}`)
   for (const [name, preset] of Object.entries(presets)) {
-    output[name] = preset
+    if (preset.type === `type` || file === `typescript.yml`) {
+      typescriptOutput[name] = preset
+    } else {
+      javascriptOutput[name] = preset
+    }
   }
 }
-const outputFile = `out/presets/presets.json`
-await fs.outputJson(outputFile, output, {spaces: 2})
+Object.assign(typescriptOutput, javascriptOutput)
+const outputs = {
+  javascript: javascriptOutput,
+  typescript: typescriptOutput,
+}
+for (const [type, output] of Object.entries(outputs)) {
+  const outputFile = `out/presets/${type}.json`
+  await fs.outputJson(outputFile, output, {spaces: 2})
+}
