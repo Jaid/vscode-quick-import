@@ -4,7 +4,12 @@ import {makeHandlebarsRenderer} from 'zeug'
 
 import {outputChannel} from '~/src/outputChannel.js'
 
-type ShortcutMap = Record<string, any>
+export type ImportPreset = {
+  import?: string
+  package?: string
+  type?: 'default' | 'named' | 'namespace' | 'type'
+}
+type Presets = Record<string, ImportPreset>
 
 class Configuration {
   config: vscode.WorkspaceConfiguration
@@ -25,8 +30,23 @@ class Configuration {
     const positionPreference = this.config.get<'firstCodeLine' | 'optimal' | 'top'>(`insertionPosition`, `optimal`)
     return positionPreference
   }
-  get map() {
-    return this.config.get<ShortcutMap>(`map`, {})
+  get presets() {
+    return this.config.get<Presets>(`presets`, {
+      lodash: {
+        type: `namespace`,
+        package: `lodash-es`,
+      },
+      react: {
+        package: `react`,
+      },
+      $: {
+        package: `execa`,
+        type: `named`,
+      },
+      vscode: {
+        type: `namespace`,
+      },
+    })
   }
   get quoteSymbol() {
     const quoteSymbol = this.config.get<string>(`quoteSymbol`, `'`)

@@ -1,0 +1,15 @@
+XOR:
+  package: ts-xor
+  type: type
+Merge:
+  package: type-fest
+  type: type
+Simplify:
+  package: type-fest
+  type: type
+NonNegative:
+  package: type-fest
+  type: type
+PackageJson:
+  package: type-fest
+  type: type

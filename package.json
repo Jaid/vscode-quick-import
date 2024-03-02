@@ -70,13 +70,20 @@
             "\""
           ]
         },
-        "quick-import.map": {
+        "quick-import.presets": {
           "description": "Custom import shortcut customizations",
           "type": "object",
           "default": {
             "lodash": {
               "type": "namespace",
               "package": "lodash-es"
+            },
+            "react": {
+              "package": "react"
+            },
+            "$": {
+              "package": "execa",
+              "type": "named"
             },
             "vscode": {
               "type": "namespace"

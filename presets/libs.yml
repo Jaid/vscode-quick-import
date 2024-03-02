@@ -1,0 +1,38 @@
+lodash:
+  package: lodash-es
+  type: namespace
+$:
+  package: execa
+  type: named
+path:
+  package: zeug/path
+shellQuote:
+  type: namespace
+globby:
+  type: named
+mapObject:
+  package: map-obj
+mapObjectSkip:
+  package: map-obj
+  type: named
+includeKeys:
+  package: filter-obj
+  type: named
+pathEqual:
+  type: named
+fs:
+  package: fs-extra
+hideBin:
+  package: yargs/helpers
+  type: named
+matches:
+  package: super-regex
+  type: named
+firstMatch:
+  package: super-regex
+  type: named
+emp:
+  type: named
+Immer:
+  package: immer
+  type: named

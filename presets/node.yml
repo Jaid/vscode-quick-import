@@ -1,0 +1,7 @@
+os:
+  package: node:os
+child_process:
+  package: node:child_process
+fileURLtoPath:
+  package: node:url
+  type: named

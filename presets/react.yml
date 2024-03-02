@@ -1,0 +1,50 @@
+react:
+  package: react
+useEffect:
+  package: react
+  type: named
+useState:
+  package: react
+  type: named
+useContext:
+  package: react
+  type: named
+useReducer:
+  package: react
+  type: named
+useCallback:
+  package: react
+  type: named
+useMemo:
+  package: react
+  type: named
+useRef:
+  package: react
+  type: named
+useImperativeHandle:
+  package: react
+  type: named
+useLayoutEffect:
+  package: react
+  type: named
+useDebugValue:
+  package: react
+  type: named
+useDeferredValue:
+  package: react
+  type: named
+useTransition:
+  package: react
+  type: named
+useInsertionEffect:
+  package: react
+  type: named
+useId:
+  package: react
+  type: named
+useSyncExternalStore:
+  package: react
+  type: named
+useOptimistic:
+  package: react
+  type: named
