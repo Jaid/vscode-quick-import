@@ -2,7 +2,7 @@ import {memoize} from 'memoize-cache-decorator'
 import * as vscode from 'vscode'
 import {makeHandlebarsRenderer} from 'zeug'
 
-import {outputChannel} from '~/src/outputChannel.js'
+import {outputChannel} from 'src/outputChannel.js'
 
 export type ImportPreset = {
   import?: string

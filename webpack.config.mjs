@@ -1,6 +1,6 @@
 import {fileURLToPath} from 'node:url'
 
-import * as path from 'zeug/path'
+import * as path from 'forward-slash-path'
 import fs from 'fs-extra'
 import * as lodash from 'lodash-es'
 

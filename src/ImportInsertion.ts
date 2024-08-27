@@ -1,6 +1,6 @@
 import * as vscode from 'vscode'
 
-import {getLineSeparator} from '~/lib/documentUtil.js'
+import {getLineSeparator} from 'lib/documentUtil.js'
 
 type Options = {
   document: vscode.TextDocument

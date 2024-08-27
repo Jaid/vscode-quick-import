@@ -1,17 +1,17 @@
 import type {ImportPreset} from './map.js'
 import type Handlebars from 'handlebars'
-import type {InputOptions} from 'zeug/types'
+import type {InputOptions} from 'more-types'
 
 import * as lodash from 'lodash-es'
 import {memoize} from 'memoize-cache-decorator'
 import * as vscode from 'vscode'
 import {logExecutionTime} from 'zeug'
 
-import {findCurrentToken, getFirstCodeLine, getFirstImportLine} from '~/lib/documentUtil.js'
-import {askForInput} from '~/lib/vscodeUtil.js'
-import {extensionConfig} from '~/src/Configuration.js'
-import {ImportInsertion} from '~/src/ImportInsertion.js'
-import {outputChannel} from '~/src/outputChannel.js'
+import {findCurrentToken, getFirstCodeLine, getFirstImportLine} from 'lib/documentUtil.js'
+import {askForInput} from 'lib/vscodeUtil.js'
+import {extensionConfig} from 'src/Configuration.js'
+import {ImportInsertion} from 'src/ImportInsertion.js'
+import {outputChannel} from 'src/outputChannel.js'
 
 // https://handlebarsjs.com/playground.html#format=1&currentExample=%7B%22template%22%3A%22import%20%7B%7B%23if%20isType%7D%7Dtype%20%7B%7BinBraces%20import%7D%7D%7B%7Belse%20if%20isNamed%7D%7D%7B%7BinBraces%20import%7D%7D%7B%7Belse%20if%20isNamespace%7D%7D*%20as%20%7B%7Bimport%7D%7D%7B%7Belse%7D%7D%7B%7Bimport%7D%7D%7B%7B%2Fif%7D%7D%20from%20%7B%7BinQuotes%20package%7D%7D%7B%7BnewLine%7D%7D%22%2C%22partials%22%3A%5B%5D%2C%22input%22%3A%22%7B%5Cn%20%20import%3A%20'fs'%2C%5Cn%20%20isNamespace%3A%20true%2C%5Cn%20%20package%3A%20'fs-extra'%5Cn%7D%5Cn%22%2C%22output%22%3A%22import%20*%20as%20fs%20from%20'fs-extra'%22%2C%22preparationScript%22%3A%22Handlebars.registerHelper('inQuotes'%2C%20function%20(input)%20%7B%5Cn%20%20%20%20return%20new%20Handlebars.SafeString(%60'%24%7Binput%7D'%60)%5Cn%7D)%5CnHandlebars.registerHelper('inBraces'%2C%20function%20(input)%20%7B%5Cn%20%20%20%20return%20new%20Handlebars.SafeString(%60%7B%20%24%7Binput%7D%20%7D%60)%5Cn%7D)%5Cn%22%2C%22handlebarsVersion%22%3A%224.7.8%22%7D
 

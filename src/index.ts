@@ -1,9 +1,9 @@
 import * as vscode from 'vscode'
 
-import {AddImportAction} from '~/src/codeAction/AddImportAction.js'
-import {addImport} from '~/src/command/addImport.js'
-import {extensionConfig} from '~/src/Configuration.js'
-import {outputChannel} from '~/src/outputChannel.js'
+import {AddImportAction} from 'src/codeAction/AddImportAction.js'
+import {addImport} from 'src/command/addImport.js'
+import {extensionConfig} from 'src/Configuration.js'
+import {outputChannel} from 'src/outputChannel.js'
 
 export const activate = (context: vscode.ExtensionContext) => {
   const disposable = vscode.commands.registerCommand(addImport.id, addImport)

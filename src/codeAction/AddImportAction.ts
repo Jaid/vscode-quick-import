@@ -2,9 +2,9 @@ import * as lodash from 'lodash-es'
 import * as vscode from 'vscode'
 import {logExecutionTime} from 'zeug'
 
-import {addImport} from '~/src/command/addImport.js'
-import {ImportBuilder} from '~/src/ImportBuilder.js'
-import {outputChannel} from '~/src/outputChannel.js'
+import {addImport} from 'src/command/addImport.js'
+import {ImportBuilder} from 'src/ImportBuilder.js'
+import {outputChannel} from 'src/outputChannel.js'
 
 const relevantDiagnosticsPatterns = [
   {

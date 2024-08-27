@@ -1,5 +1,5 @@
-import type {ImportInsertion} from '~/src/ImportInsertion.js'
-import type {InputOptions} from 'zeug/types'
+import type {ImportInsertion} from 'src/ImportInsertion.js'
+import type {InputOptions} from 'more-types'
 
 import * as vscode from 'vscode'
 
